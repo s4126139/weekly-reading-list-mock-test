@@ -828,7 +828,7 @@ git diff --cached
 
 Không dùng `git add .` một cách mù quáng nếu thư mục có file khác. Stage đúng nhóm file của bước đang làm rồi commit bằng conventional commit.
 
-### 17.2 Ledger commit hiện tại
+### 17.2 Ledger các commit trước lần đồng bộ tài liệu cuối
 
 Danh sách dưới đây theo thứ tự từ cũ đến mới và dùng full hash thực tế:
 
@@ -844,6 +844,8 @@ Danh sách dưới đây theo thứ tự từ cũ đến mới và dùng full ha
 | `ed862b78ce89f287d3ed4c4a708919b9e1ad0585` | `fix: enforce runtime and seed invariants` | Chặn port ngoài range, bắt buộc đủ 10 lists và dùng page title động |
 | `4ec982ebe74353e1396445003c8cdc74a639430d` | `fix(ui): align mobile wireframes` | Tinh chỉnh breakpoint mobile, typography và khoảng cách sau visual QA |
 | `7faaa4a246fbbafa807cf556e4c635a527a698dd` | `docs: add complete mock test tutorial` | Hướng dẫn duy nhất từ setup đến kiểm thử và push GitHub |
+| `3bf81c06e60b3c1a474571c192c7e8b8d991993c` | `fix(server): make port resolution deterministic` | Tách việc kiểm tra port khỏi `.env` để fallback 3000 luôn kiểm thử được |
+| `49ce6d04f46226779b4db647cd98aa02f96ded39` | `chore(deps): apply npm security updates` | Cập nhật lockfile lên các bản vá và đưa audit về 0 vulnerability |
 
 Xem ledger mới nhất bất cứ lúc nào:
 
@@ -851,7 +853,7 @@ Xem ledger mới nhất bất cứ lúc nào:
 git log --reverse --format="%H %s"
 ```
 
-Hash của commit đang sửa chính `TUTORIAL.md` chỉ tồn tại sau khi file được commit, nên lệnh `git log` là nguồn chính xác để xem mọi fix phát sinh sau ledger này.
+Hash của commit đồng bộ chính `TUTORIAL.md` chỉ tồn tại sau khi file được commit, nên lệnh `git log` là nguồn chính xác để xem commit tài liệu cuối cùng và mọi thay đổi phát sinh sau ledger này.
 
 ### 17.3 Toàn bộ lệnh stage và commit theo từng bước
 
@@ -918,6 +920,11 @@ npm audit fix
 git add package-lock.json TUTORIAL.md
 git diff --cached
 git commit -m "chore(deps): apply npm security updates"
+
+# Bước 13 — đồng bộ ledger sau final verification
+git add TUTORIAL.md
+git diff --cached
+git commit -m "docs: sync final commit ledger"
 ```
 
 Sau mỗi bước, dùng `git status --short` để bảo đảm không stage nhầm `.env`, file tạm hoặc credential. `git add .` không được dùng trong chuỗi trên vì dễ gom nhầm bí mật.
