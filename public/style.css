@@ -310,7 +310,8 @@ body {
 
   .profile-panel {
     align-items: center !important;
-    padding: 1rem 1.25rem 1.4rem;
+    margin-inline: -0.75rem;
+    padding: 1rem 1.25rem 3.15rem;
   }
 
   .profile-copy {
@@ -319,6 +320,11 @@ body {
 
   .reading-title {
     margin-top: 0.2rem;
+    font-size: 1.75rem;
+  }
+
+  .reading-days {
+    font-size: 1.55rem;
   }
 
   .reading-card-body {
@@ -338,11 +344,33 @@ body {
   }
 
   .book-hero-content {
-    padding: 3rem;
+    padding: 3.5rem 3rem 3rem;
+  }
+
+  .book-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .book-hero-content h2 {
+    font-size: 1.7rem;
+  }
+
+  .book-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+  }
+
+  .book-meta {
+    font-size: 1.05rem;
+  }
+
+  .related-section .row {
+    padding-inline: 1rem;
   }
 
   .related-section > h2 {
     text-align: center;
+    font-size: 1.75rem;
   }
 }
 
@@ -356,33 +384,8 @@ body {
     font-size: 2.5rem;
   }
 
-  .reading-title {
-    font-size: 1.75rem;
-  }
-
-  .reading-days {
-    font-size: 1.55rem;
-  }
-
   .book-hero-content {
     padding: 2.4rem 2rem;
-  }
-
-  .book-hero-content h1 {
-    font-size: 2rem;
-  }
-
-  .book-hero-content h2 {
-    font-size: 1.7rem;
-  }
-
-  .book-description {
-    font-size: 1.25rem;
-    line-height: 1.6;
-  }
-
-  .book-meta {
-    font-size: 1.05rem;
   }
 
   .related-title {
