@@ -1,0 +1,15 @@
+<header class="site-header py-4">
+  <div class="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between gap-3">
+    <a class="brand-link" href="/" aria-label="Kai Nguyen's weekly readings home">
+      <img class="site-logo" src="/images/logo.png" alt="Weekly readings logo" width="64" height="64">
+    </a>
+
+    <nav class="site-nav d-flex flex-wrap justify-content-center align-items-center gap-2" aria-label="Breadcrumb">
+      <a href="/">Home Page</a>
+      <% if (currentBook) { %>
+        <span aria-hidden="true">&gt;</span>
+        <a href="/book/<%= encodeURIComponent(currentBook.title) %>" aria-current="page"><%= currentBook.title %></a>
+      <% } %>
+    </nav>
+  </div>
+</header>

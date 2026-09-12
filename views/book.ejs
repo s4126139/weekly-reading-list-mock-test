@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Replace <Your Full Name> with your name here  -->
-    <title>Your Full Name's Weekly Readings</title>
-    
-    <!-- Include your favicon here -->
-
-    <!-- Including Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-      
+  <%- include('partials/head') %>
 </head>
-<!-- Header-->
-<header>
-    <img src="/images/logo.jpg" alt="logo" width="64" height="64">
-    <nav>
-        <a href="/">Home Page</a>
-    </nav>
-</header>
+<body>
+  <div class="container detail-shell min-vh-100 d-flex flex-column">
+    <%- include('partials/header') %>
 
-<!-- Main content-->
-<main>
-    <div>
-        <!-- Book details-->
-    </div>
+    <main class="flex-grow-1">
+      <article class="book-hero position-relative overflow-hidden">
+        <img class="book-hero-image" src="<%= book.image %>" alt="Cover illustration for <%= book.title %>">
+        <div class="book-hero-shade" aria-hidden="true"></div>
+        <div class="book-hero-content position-relative text-white">
+          <h1><%= book.title %></h1>
+          <h2>By <%= book.author %></h2>
+          <p class="book-description"><%= book.description %></p>
+          <p class="book-meta mb-0"><strong><%= book.category %> | Published in <%= book.year %></strong></p>
+        </div>
+      </article>
 
-    <!-- Related books in the same category -->
-    <section>
-        <p>Related Books</p>
-       
-    </section>
+      <section class="related-section" aria-labelledby="related-title">
+        <h2 id="related-title">Related Books</h2>
 
-    <!-- Back button here -->
-    
-      <button id="btn-back">Back</button>
-    
-  </main>
-    
- <!-- Footer -->
-        <footer>
-            Made by <b>Your full name</b>
-        </footer>
-    </div>
+        <div class="row g-4">
+          <% relatedBooks.forEach((relatedBook) => { %>
+            <div class="col-lg-4">
+              <a class="related-card d-block position-relative overflow-hidden" href="/book/<%= encodeURIComponent(relatedBook.title) %>">
+                <img
+                  class="related-image"
+                  src="<%= relatedBook.image %>"
+                  alt="Cover illustration for <%= relatedBook.title %>"
+                  loading="lazy"
+                >
+                <span class="related-shade" aria-hidden="true"></span>
+                <span class="related-title position-absolute"><%= relatedBook.title %> By <%= relatedBook.author %></span>
+              </a>
+            </div>
+          <% }); %>
+        </div>
+      </section>
 
-<!-- Including Boostrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+      <form class="back-form d-flex justify-content-center" action="/" method="get">
+        <button id="btn-back" class="btn btn-primary back-button" type="submit">Back</button>
+      </form>
+    </main>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/scripts') %>
 </body>
 </html>

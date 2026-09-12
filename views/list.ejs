@@ -1,66 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Replace <Your Full Name> with your name here  -->
-    <title>Your Full Name's Weekly Readings</title>
-    
-    <!-- Include your favicon here -->
-
-    <!-- Including Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-      
+  <%- include('partials/head') %>
 </head>
 <body>
-    <div class="container mx-auto min-vh-100 d-flex flex-column">
+  <div class="container page-shell min-vh-100 d-flex flex-column">
+    <%- include('partials/header') %>
 
-<!-- Header, the first section of the page-->
-<header>
-    <img src="/images/logo.png" alt="logo" width="64" height="64">
-    <nav>
-        <a href="/">Home Page</a>
-    </nav>
-</header>
+    <main class="flex-grow-1 pb-3">
+      <div class="row g-4 align-items-stretch">
+        <aside class="col-lg-4" aria-label="Student profile">
+          <section id="profile" class="profile-panel h-100 d-flex flex-column align-items-center align-items-lg-start">
+            <img
+              class="profile-photo rounded-circle"
+              src="/images/profile.png"
+              alt="Profile portrait of Kai Nguyen"
+              width="250"
+              height="250"
+            >
 
-<!-- Main content -->
-<main>
-    
-    <!-- Your profile-->
-    <aside id="profile">
-        <div>
-            <img src="images/profile.png" alt="" height="250" >
-        </div>
-        <div>
-            <div class="mb-4">
-                <span>Hi, I'm</span>
-                <h1>Peter John</h1>
+            <div class="profile-copy text-center text-lg-start">
+              <p class="profile-intro mb-1">Hi, I'm</p>
+              <h1 class="profile-name mb-4">Kai Nguyen</h1>
+              <address class="profile-details mb-0">
+                <strong>s4126139</strong><br>
+                <a href="mailto:s4126139@rmit.edu.vn">s4126139@rmit.edu.vn</a>
+              </address>
             </div>
-            <div>
-                <h2>v1234567</h2>
-                <h2>peter.john@rmit.edu.vn</h2>
-            </div>
-        </div>
-    </aside>
-    
-    <!-- The reading list is shown here-->
-    <section id="reading-list">
-        <h2>Recommended <b>READING LIST</b></h2>
-    </section> 
-</main>
-    
- <!-- Footer -->
-        <footer>
-            Made by <b>Your full name</b>
-        </footer>
-    </div>
+          </section>
+        </aside>
 
+        <section id="reading-list" class="col-lg-8" aria-labelledby="reading-list-title">
+          <h2 id="reading-list-title" class="reading-title text-center">
+            Recommended <strong>READING LIST</strong>
+          </h2>
 
-<!-- Including Boostrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+          <form class="refresh-form d-flex justify-content-center justify-content-lg-end" action="/" method="post" data-refresh-form>
+            <input type="hidden" name="currentListId" value="<%= readingList._id %>">
+            <button class="btn btn-primary refresh-button" type="submit" data-refresh-button>
+              <span data-refresh-label>Refresh</span>
+            </button>
+          </form>
+
+          <% schedule.forEach((slot) => { %>
+            <% const book = readingList.books.find((item) => item.category === slot.category); %>
+            <% if (book) { %>
+              <section class="reading-slot" aria-labelledby="slot-<%= slot.category.toLowerCase() %>">
+                <h3 id="slot-<%= slot.category.toLowerCase() %>" class="reading-days"><%= slot.days %></h3>
+
+                <article class="card reading-card overflow-hidden">
+                  <div class="row g-0 h-100">
+                    <div class="col-lg-6 d-flex">
+                      <div class="card-body reading-card-body">
+                        <h4 class="card-title reading-book-title">
+                          <a href="/book/<%= encodeURIComponent(book.title) %>"><%= book.title %> by <%= book.author %></a>
+                        </h4>
+                        <p class="card-text reading-description"><%= book.description %></p>
+                        <p class="reading-category mb-0"><%= book.category %></p>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <img
+                        class="reading-cover"
+                        src="<%= book.image %>"
+                        alt="Cover illustration for <%= book.title %>"
+                        loading="lazy"
+                      >
+                    </div>
+                  </div>
+                </article>
+              </section>
+            <% } %>
+          <% }); %>
+        </section>
+      </div>
+    </main>
+
+    <%- include('partials/footer') %>
+  </div>
+
+  <%- include('partials/scripts') %>
 </body>
 </html>
