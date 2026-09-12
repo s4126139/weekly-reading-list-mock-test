@@ -21,7 +21,7 @@ const SCHEDULE = [
   { category: 'NOVEL', days: 'Saturday-Sunday' },
 ];
 
-function getPort(value = process.env.PORT) {
+function getPort(value) {
   const parsedPort = Number(value);
   return Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535
     ? parsedPort
@@ -119,7 +119,7 @@ function createApp({ BookModel = Book, ReadingListModel = ReadingList } = {}) {
 const app = createApp();
 
 if (require.main === module) {
-  const port = getPort();
+  const port = getPort(process.env.PORT);
 
   connectDatabase()
     .then(() => {

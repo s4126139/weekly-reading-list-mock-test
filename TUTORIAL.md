@@ -370,12 +370,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 Hàm `getPort` dùng `PORT` nếu đó là số nguyên dương; nếu `.env` thiếu hoặc giá trị không hợp lệ thì dùng 3000:
 
 ```js
-function getPort(value = process.env.PORT) {
+function getPort(value) {
   const parsedPort = Number(value);
   return Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535
     ? parsedPort
     : 3000;
 }
+```
+
+Khi khởi động server, truyền biến môi trường vào một cách tường minh:
+
+```js
+const port = getPort(process.env.PORT);
 ```
 
 Với `.env` đúng, URL là `http://localhost:4000`. Không có `PORT`, URL là `http://localhost:3000`.
@@ -729,6 +735,9 @@ Kiểm tra:
 - Network Access đã có rule cần thiết.
 - Chờ một lúc sau khi vừa sửa IP rule/user.
 - Mạng hiện tại truy cập Atlas được.
+- Tạm tắt VPN/proxy rồi thử lại; một số VPN chặn kết nối TLS tới cổng MongoDB `27017` dù trang web Atlas vẫn mở bình thường.
+
+Nếu seed chỉ timeout nhưng không báo `Authentication failed`, hãy kiểm tra VPN/mạng trước khi đổi password. Lỗi xác thực và lỗi mạng là hai nguyên nhân khác nhau.
 
 ### Seed chạy nhưng không thấy đúng database
 
@@ -825,6 +834,7 @@ Danh sách dưới đây theo thứ tự từ cũ đến mới và dùng full ha
 | `0a90f03a3dc68e251601d97d40452d658493a171` | `test: cover reading list behavior` | Model, route và browser behavior tests |
 | `ed862b78ce89f287d3ed4c4a708919b9e1ad0585` | `fix: enforce runtime and seed invariants` | Chặn port ngoài range, bắt buộc đủ 10 lists và dùng page title động |
 | `4ec982ebe74353e1396445003c8cdc74a639430d` | `fix(ui): align mobile wireframes` | Tinh chỉnh breakpoint mobile, typography và khoảng cách sau visual QA |
+| `7faaa4a246fbbafa807cf556e4c635a527a698dd` | `docs: add complete mock test tutorial` | Hướng dẫn duy nhất từ setup đến kiểm thử và push GitHub |
 
 Xem ledger mới nhất bất cứ lúc nào:
 
@@ -832,7 +842,7 @@ Xem ledger mới nhất bất cứ lúc nào:
 git log --reverse --format="%H %s"
 ```
 
-Hash của commit chứa chính `TUTORIAL.md` chỉ tồn tại sau khi file này được commit, nên lệnh `git log` là nguồn chính xác để xem cả commit tài liệu và mọi fix phát sinh sau đó.
+Hash của commit đang sửa chính `TUTORIAL.md` chỉ tồn tại sau khi file được commit, nên lệnh `git log` là nguồn chính xác để xem mọi fix phát sinh sau ledger này.
 
 ### 17.3 Toàn bộ lệnh stage và commit theo từng bước
 
@@ -888,6 +898,11 @@ git commit -m "fix(ui): align mobile wireframes"
 git add TUTORIAL.md
 git diff --cached
 git commit -m "docs: add complete mock test tutorial"
+
+# Bước 11 — làm getPort độc lập với .env để fallback luôn kiểm thử được
+git add app.js TUTORIAL.md
+git diff --cached
+git commit -m "fix(server): make port resolution deterministic"
 ```
 
 Sau mỗi bước, dùng `git status --short` để bảo đảm không stage nhầm `.env`, file tạm hoặc credential. `git add .` không được dùng trong chuỗi trên vì dễ gom nhầm bí mật.
