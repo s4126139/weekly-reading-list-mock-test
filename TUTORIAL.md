@@ -607,6 +607,7 @@ Copy-Item .env.example .env
 # Điền connection string thật vào .env trên máy
 npm run seed
 npm test
+npm audit --omit=dev
 npm start
 ```
 
@@ -659,6 +660,14 @@ Ba file test có trách nhiệm khác nhau:
 - `pageshow` reset trạng thái.
 
 Các route tests dùng fake models, vì vậy có thể chạy khi không có `.env` và không kết nối Atlas. Việc Atlas thật được kiểm tra riêng bằng `npm run seed` và `npm start`.
+
+Kiểm tra dependency production:
+
+```powershell
+npm audit --omit=dev
+```
+
+Nếu npm báo có bản vá không làm đổi major version, chạy `npm audit fix`, kiểm tra diff của `package-lock.json`, rồi chạy lại toàn bộ tests. Không dùng `--force` ngay trước bài thi vì tùy chọn đó có thể nâng major version và làm hỏng code.
 
 ## 15. Checklist kiểm tra bằng @Browser
 
@@ -903,6 +912,12 @@ git commit -m "docs: add complete mock test tutorial"
 git add app.js TUTORIAL.md
 git diff --cached
 git commit -m "fix(server): make port resolution deterministic"
+
+# Bước 12 — cập nhật dependency đã được npm audit xác nhận
+npm audit fix
+git add package-lock.json TUTORIAL.md
+git diff --cached
+git commit -m "chore(deps): apply npm security updates"
 ```
 
 Sau mỗi bước, dùng `git status --short` để bảo đảm không stage nhầm `.env`, file tạm hoặc credential. `git add .` không được dùng trong chuỗi trên vì dễ gom nhầm bí mật.
@@ -975,6 +990,7 @@ Chạy từ thư mục `materials`:
 ```powershell
 npm test
 npm run seed
+npm audit --omit=dev
 npm start
 ```
 
@@ -990,6 +1006,7 @@ git ls-files .env
 Kết quả hoàn chỉnh là:
 
 - Tests pass.
+- Production dependency audit báo `0 vulnerabilities`.
 - Seed báo 14 books và 10 reading lists.
 - Server mở đúng port 4000 với `.env` hợp lệ.
 - Hai trang khớp desktop/mobile wireframe và không có lỗi console.
