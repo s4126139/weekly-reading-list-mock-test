@@ -23,7 +23,9 @@ const SCHEDULE = [
 
 function getPort(value = process.env.PORT) {
   const parsedPort = Number(value);
-  return Number.isInteger(parsedPort) && parsedPort > 0 ? parsedPort : 3000;
+  return Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535
+    ? parsedPort
+    : 3000;
 }
 
 async function getRandomReadingList(ReadingListModel, currentListId) {

@@ -170,4 +170,8 @@ test('port uses the configured value and otherwise falls back to 3000', () => {
   assert.equal(getPort('4000'), 4000);
   assert.equal(getPort(undefined), 3000);
   assert.equal(getPort('not-a-port'), 3000);
+  assert.equal(getPort('0'), 3000);
+  assert.equal(getPort('-1'), 3000);
+  assert.equal(getPort('65536'), 3000);
+  assert.equal(getPort('3000.5'), 3000);
 });

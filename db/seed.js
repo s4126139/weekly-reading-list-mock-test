@@ -152,9 +152,18 @@ async function seed() {
 
     for (let i = 1; i <= 10; i++) {
       const sampledBooks = await sampleBooksForCategories(categories);
-      if (sampledBooks.length === categories.length) {
-        readingLists.push({ name: `Reading List ${i}`, books: sampledBooks });
+
+      if (sampledBooks.length !== categories.length) {
+        throw new Error(
+          `Could not build Reading List ${i}: every category needs at least one book.`
+        );
       }
+
+      readingLists.push({ name: `Reading List ${i}`, books: sampledBooks });
+    }
+
+    if (readingLists.length !== 10) {
+      throw new Error('Seeding must create exactly 10 reading lists.');
     }
 
     await ReadingList.insertMany(readingLists);
