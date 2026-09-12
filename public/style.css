@@ -1,0 +1,400 @@
+:root {
+  --rmit-blue: #00005b;
+  --bootstrap-blue: #0d6efd;
+  --body-text: #212529;
+  --muted-text: #6c757d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--body-text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.site-header > div {
+  min-height: 64px;
+}
+
+.brand-link,
+.site-nav a {
+  border-radius: 0.25rem;
+}
+
+.site-logo {
+  display: block;
+  object-fit: contain;
+}
+
+.site-nav a {
+  padding: 0.4rem 0.55rem;
+  color: var(--bootstrap-blue);
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.site-nav a:hover {
+  background-color: var(--bootstrap-blue);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.brand-link:focus-visible,
+.site-nav a:focus-visible,
+.reading-book-title a:focus-visible,
+.related-card:focus-visible,
+.btn:focus-visible,
+.profile-details a:focus-visible {
+  outline: 3px solid rgba(13, 110, 253, 0.45);
+  outline-offset: 3px;
+}
+
+.profile-panel {
+  min-height: 100%;
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: var(--rmit-blue);
+  color: #ffffff;
+}
+
+.profile-photo {
+  display: block;
+  flex: 0 0 auto;
+  object-fit: cover;
+}
+
+.profile-copy {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.profile-intro {
+  font-size: 1rem;
+}
+
+.profile-name {
+  font-size: clamp(2.5rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.profile-details {
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.profile-details a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.reading-title {
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.reading-title strong {
+  font-weight: 700;
+}
+
+.refresh-form {
+  margin-bottom: 1.5rem;
+}
+
+.refresh-button,
+.back-button {
+  width: 200px;
+  min-height: 38px;
+}
+
+.reading-slot + .reading-slot {
+  margin-top: 1.25rem;
+}
+
+.reading-days {
+  margin: 0 0 0.65rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.reading-card {
+  border-color: #d6d6d6;
+  border-radius: 0.3rem;
+  box-shadow: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.reading-card:hover {
+  border-color: #b8c9e6;
+  box-shadow: 0 0.4rem 1rem rgba(33, 37, 41, 0.08);
+}
+
+.reading-card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2rem;
+}
+
+.reading-book-title {
+  margin-bottom: 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.reading-book-title a {
+  color: var(--bootstrap-blue);
+  text-decoration: none;
+}
+
+.reading-book-title a:hover {
+  text-decoration: underline;
+}
+
+.reading-description {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.reading-category {
+  margin-top: auto;
+  color: var(--muted-text);
+  font-size: 0.78rem;
+}
+
+.reading-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  object-fit: cover;
+}
+
+.book-hero {
+  min-height: 540px;
+  border-radius: 0.3rem;
+  background: #111111;
+}
+
+.book-hero-image,
+.book-hero-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.book-hero-image {
+  object-fit: cover;
+}
+
+.book-hero-shade {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.43));
+}
+
+.book-hero-content {
+  z-index: 1;
+  padding: 3rem;
+}
+
+.book-hero-content h1 {
+  margin-bottom: 0.65rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.book-hero-content h2 {
+  margin-bottom: 1.7rem;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.book-description {
+  margin-bottom: 1.8rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.book-meta {
+  font-size: 1.25rem;
+}
+
+.related-section {
+  margin-top: 3rem;
+}
+
+.related-section > h2 {
+  margin-bottom: 0.65rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.related-card {
+  height: 300px;
+  border-radius: 0.3rem;
+  background: #222222;
+  color: #ffffff;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.related-card:hover {
+  color: #ffffff;
+  text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: 0 0.75rem 1.5rem rgba(33, 37, 41, 0.2);
+}
+
+.related-image,
+.related-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.related-image {
+  object-fit: cover;
+}
+
+.related-shade {
+  background: linear-gradient(110deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.08));
+}
+
+.related-title {
+  top: 1.5rem;
+  left: 1.25rem;
+  z-index: 1;
+  max-width: calc(100% - 2.5rem);
+  font-size: 1.55rem;
+  line-height: 1.5;
+}
+
+.back-form {
+  margin-top: 2rem;
+}
+
+.site-footer {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 992px) {
+  .site-header > div {
+    justify-content: flex-start !important;
+  }
+
+  .profile-panel {
+    align-items: center !important;
+  }
+
+  .reading-card,
+  .reading-card > .row {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .site-header {
+    padding-top: 1.1rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .profile-panel {
+    align-items: center !important;
+    padding: 1rem 1.25rem 1.4rem;
+  }
+
+  .profile-copy {
+    margin-top: 1.25rem;
+  }
+
+  .reading-title {
+    margin-top: 0.2rem;
+  }
+
+  .reading-card-body {
+    padding: 2rem 1.5rem 1.35rem;
+  }
+
+  .reading-cover {
+    width: calc(100% - 1.5rem);
+    height: auto;
+    min-height: 0;
+    margin: 0 0.75rem 0.75rem;
+    aspect-ratio: 3 / 2;
+  }
+
+  .book-hero {
+    min-height: 602px;
+  }
+
+  .book-hero-content {
+    padding: 3rem;
+  }
+
+  .related-section > h2 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .profile-photo {
+    width: min(250px, 74vw);
+    height: min(250px, 74vw);
+  }
+
+  .profile-name {
+    font-size: 2.5rem;
+  }
+
+  .reading-title {
+    font-size: 1.75rem;
+  }
+
+  .reading-days {
+    font-size: 1.55rem;
+  }
+
+  .book-hero-content {
+    padding: 2.4rem 2rem;
+  }
+
+  .book-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .book-hero-content h2 {
+    font-size: 1.7rem;
+  }
+
+  .book-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .book-meta {
+    font-size: 1.05rem;
+  }
+
+  .related-title {
+    font-size: 1.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
