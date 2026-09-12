@@ -2,7 +2,7 @@
  * Seed the database with books and reading lists
  */
 const { Book, ReadingList } = require('./bookModel');
-const mongoose = require('mongoose');
+const { connectDatabase, disconnectDatabase } = require('./mongoose');
 
 /* Data for Books */
 const books = [
@@ -136,15 +136,16 @@ async function seed() {
   }
 
   try {
-    // Drop and insert books
-    await Book.collection.drop();
-    console.log('Current books dropped!');
+    await connectDatabase();
+
+    // Clear only these collections so seeding also works on a fresh database.
+    await Book.deleteMany({});
+    console.log('Current books cleared!');
     await Book.insertMany(books);
     console.log('New books saved!');
 
-    // Drop and generate reading lists
-    await ReadingList.collection.drop();
-    console.log('Current reading lists dropped!');
+    await ReadingList.deleteMany({});
+    console.log('Current reading lists cleared!');
 
     const categories = ['TEXTBOOK', 'PHILOSOPHY', 'NOVEL'];
     const readingLists = [];
@@ -156,27 +157,27 @@ async function seed() {
       }
     }
 
-    // Batch insert reading lists
     await ReadingList.insertMany(readingLists);
     console.log('New reading lists saved!');
-  } catch (error) {
-    console.error('Error in seeding:', error.message);
-  }
-}
 
-async function checkAndExit() {
-  try {
-    console.log('Checking DB for records...');
     const bookCount = await Book.countDocuments();
     const readingListCount = await ReadingList.countDocuments();
+
+    console.log('Checking DB for records...');
     console.log(`Total books in DB: ${bookCount}`);
     console.log(`Total reading lists in DB: ${readingListCount}`);
-  } catch (err) {
-    console.error('Error checking DB:', err);
+
+    return { bookCount, readingListCount };
   } finally {
-    mongoose.connection.close();
-    process.exit(0);
+    await disconnectDatabase();
   }
 }
 
-seed().then(() => checkAndExit()).catch(console.error);
+if (require.main === module) {
+  seed().catch((error) => {
+    console.error('Error in seeding:', error.message);
+    process.exitCode = 1;
+  });
+}
+
+module.exports = { books, seed };

@@ -1,13 +1,33 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
-// Provide your MongoDB Atlas connection string
-// Make sure to connect to the DB named 2025b_final_sid
+async function connectDatabase() {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
 
-MONGODB_CONNECTION_STRING = 'mongodb+srv://<username>:<password>@<host>/2025b_final_<sid>?retryWrites=true&w=majority&appName=Cluster0'
+  const connectionString = process.env.MONGODB_CONNECTION_STRING;
 
-mongoose.connect(MONGODB_CONNECTION_STRING)
-        .then(() => {console.log("Connected to MongoDB Atlas")})
-        .catch(error => {console.error(error)});
+  if (!connectionString) {
+    throw new Error(
+      'MONGODB_CONNECTION_STRING is missing. Add it to the .env file.'
+    );
+  }
 
-module.exports = mongoose;
+  await mongoose.connect(connectionString);
+  console.log('Connected to MongoDB Atlas');
+
+  return mongoose.connection;
+}
+
+async function disconnectDatabase() {
+  if (mongoose.connection.readyState !== 0) {
+    await mongoose.disconnect();
+  }
+}
+
+module.exports = {
+  connectDatabase,
+  disconnectDatabase,
+  mongoose
+};
