@@ -1,84 +1,82 @@
+<%#
+  RMIT University Vietnam
+  Course: COSC3060 | COSC3061 Web Programming Studio
+  Semester: 2026B
+  Assessment: Full-Stack In-Class Lab Test
+  Author: Kai Nguyen
+  ID: s4126139
+  Acknowledgement: Bootstrap, EJS, and the supplied interface reference.
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('partials/head') %>
 </head>
-<body>
-  <div class="container page-shell min-vh-100 d-flex flex-column">
-    <%- include('partials/header') %>
+<body class="container min-vh-100 d-flex flex-column">
+  <%- include('partials/header') %>
 
-    <main class="flex-grow-1 pb-3">
-      <div class="row g-4 align-items-stretch">
-        <aside class="col-lg-4" aria-label="Student profile">
-          <section id="profile" class="profile-panel h-100 d-flex flex-column align-items-center align-items-lg-start">
-            <img
-              class="profile-photo rounded-circle"
-              src="/images/profile.png"
-              alt="Profile portrait of Kai Nguyen"
-              width="250"
-              height="250"
-            >
+  <main class="row g-4 align-items-stretch flex-grow-1 pb-3">
+    <%# Static student profile shown beside every generated reading list. %>
+    <aside class="col-lg-4" aria-label="Student profile">
+      <section id="profile" class="profile-panel h-100 d-flex flex-column align-items-center">
+        <img
+          class="profile-photo rounded-circle"
+          src="/images/profile.png"
+          alt="Profile portrait of Kai Nguyen"
+          width="250"
+          height="250"
+        >
 
-            <div class="profile-copy text-center text-lg-start">
-              <p class="profile-intro mb-1">Hi, I'm</p>
-              <h1 class="profile-name mb-4">Kai Nguyen</h1>
-              <address class="profile-details mb-0">
-                <strong>s4126139</strong><br>
-                <a href="mailto:s4126139@rmit.edu.vn">s4126139@rmit.edu.vn</a>
-              </address>
+        <div class="profile-copy text-center text-lg-start">
+          <p class="profile-intro mb-1">Hi, I'm</p>
+          <h1 class="profile-name mb-4">Kai Nguyen</h1>
+          <address class="profile-details mb-0">
+            <strong>s4126139</strong><br>
+            <a href="mailto:s4126139@rmit.edu.vn">s4126139@rmit.edu.vn</a>
+          </address>
+        </div>
+      </section>
+    </aside>
+
+    <%# Dynamic schedule prepared by app.js and rendered in weekday order. %>
+    <section id="reading-list" class="col-lg-8" aria-labelledby="reading-list-title">
+      <h2 id="reading-list-title" class="reading-title text-center">
+        Recommended <strong>READING LIST</strong>
+      </h2>
+
+      <form class="refresh-form d-flex justify-content-center justify-content-lg-end" action="/" method="post" data-refresh-form>
+        <%# The current ID lets POST / request a different random list. %>
+        <input type="hidden" name="currentListId" value="<%= currentListId %>">
+        <button class="btn btn-primary refresh-button" type="submit" data-refresh-button>
+          <span data-refresh-label>Refresh</span>
+        </button>
+      </form>
+
+      <% weeklyReadings.forEach(({ days, book }) => { %>
+        <section class="reading-slot" aria-labelledby="slot-<%= book.category.toLowerCase() %>">
+          <h3 id="slot-<%= book.category.toLowerCase() %>" class="reading-days"><%= days %></h3>
+
+          <article class="card reading-card overflow-hidden">
+            <div class="card-body reading-card-body">
+              <h4 class="card-title reading-book-title">
+                <a href="/book/<%= encodeURIComponent(book.title) %>"><%= book.title %> by <%= book.author %></a>
+              </h4>
+              <p class="card-text reading-description"><%= book.description %></p>
+              <p class="reading-category mb-0"><%= book.category %></p>
             </div>
-          </section>
-        </aside>
-
-        <section id="reading-list" class="col-lg-8" aria-labelledby="reading-list-title">
-          <h2 id="reading-list-title" class="reading-title text-center">
-            Recommended <strong>READING LIST</strong>
-          </h2>
-
-          <form class="refresh-form d-flex justify-content-center justify-content-lg-end" action="/" method="post" data-refresh-form>
-            <input type="hidden" name="currentListId" value="<%= readingList._id %>">
-            <button class="btn btn-primary refresh-button" type="submit" data-refresh-button>
-              <span data-refresh-label>Refresh</span>
-            </button>
-          </form>
-
-          <% schedule.forEach((slot) => { %>
-            <% const book = readingList.books.find((item) => item.category === slot.category); %>
-            <% if (book) { %>
-              <section class="reading-slot" aria-labelledby="slot-<%= slot.category.toLowerCase() %>">
-                <h3 id="slot-<%= slot.category.toLowerCase() %>" class="reading-days"><%= slot.days %></h3>
-
-                <article class="card reading-card overflow-hidden">
-                  <div class="row g-0 h-100">
-                    <div class="col-lg-6 d-flex">
-                      <div class="card-body reading-card-body">
-                        <h4 class="card-title reading-book-title">
-                          <a href="/book/<%= encodeURIComponent(book.title) %>"><%= book.title %> by <%= book.author %></a>
-                        </h4>
-                        <p class="card-text reading-description"><%= book.description %></p>
-                        <p class="reading-category mb-0"><%= book.category %></p>
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <img
-                        class="reading-cover"
-                        src="<%= book.image %>"
-                        alt="Cover illustration for <%= book.title %>"
-                      >
-                    </div>
-                  </div>
-                </article>
-              </section>
-            <% } %>
-          <% }); %>
+            <img
+              class="reading-cover"
+              src="<%= book.image %>"
+              alt="Cover illustration for <%= book.title %>"
+            >
+          </article>
         </section>
-      </div>
-    </main>
+      <% }); %>
+    </section>
+  </main>
 
-    <%- include('partials/footer') %>
-  </div>
+  <%- include('partials/footer') %>
 
   <script src="/app.js" defer></script>
-  <%- include('partials/scripts') %>
 </body>
 </html>

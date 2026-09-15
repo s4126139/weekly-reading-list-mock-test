@@ -1,52 +1,57 @@
+<%#
+  RMIT University Vietnam
+  Course: COSC3060 | COSC3061 Web Programming Studio
+  Semester: 2026B
+  Assessment: Full-Stack In-Class Lab Test
+  Author: Kai Nguyen
+  ID: s4126139
+  Acknowledgement: Bootstrap, EJS, and the supplied interface reference.
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('partials/head') %>
 </head>
-<body>
-  <div class="container detail-shell min-vh-100 d-flex flex-column">
-    <%- include('partials/header') %>
+<body class="container min-vh-100 d-flex flex-column">
+  <%- include('partials/header') %>
 
-    <main class="flex-grow-1">
-      <article class="book-hero position-relative overflow-hidden">
-        <img class="book-hero-image" src="<%= book.image %>" alt="Cover illustration for <%= book.title %>">
-        <div class="book-hero-shade" aria-hidden="true"></div>
-        <div class="book-hero-content position-relative text-white">
-          <h1><%= book.title %></h1>
-          <h2>By <%= book.author %></h2>
-          <p class="book-description"><%= book.description %></p>
-          <p class="book-meta mb-0"><strong><%= book.category %> | Published in <%= book.year %></strong></p>
-        </div>
-      </article>
+  <main class="flex-grow-1">
+    <%# The selected book is displayed over its image in the hero panel. %>
+    <article class="book-hero position-relative overflow-hidden">
+      <img class="book-hero-image" src="<%= book.image %>" alt="Cover illustration for <%= book.title %>">
+      <div class="book-hero-content position-relative text-white">
+        <h1><%= book.title %></h1>
+        <h2>By <%= book.author %></h2>
+        <p class="book-description"><%= book.description %></p>
+        <p class="book-meta mb-0"><strong><%= book.category %> | Published in <%= book.year %></strong></p>
+      </div>
+    </article>
 
-      <section class="related-section" aria-labelledby="related-title">
-        <h2 id="related-title">Related Books</h2>
+    <%# app.js supplies every other book that shares this book's category. %>
+    <section class="related-section" aria-labelledby="related-title">
+      <h2 id="related-title">Related Books</h2>
 
-        <div class="row g-4">
-          <% relatedBooks.forEach((relatedBook) => { %>
-            <div class="col-lg-4">
-              <a class="related-card d-block position-relative overflow-hidden" href="/book/<%= encodeURIComponent(relatedBook.title) %>">
-                <img
-                  class="related-image"
-                  src="<%= relatedBook.image %>"
-                  alt="Cover illustration for <%= relatedBook.title %>"
-                >
-                <span class="related-shade" aria-hidden="true"></span>
-                <span class="related-title position-absolute"><%= relatedBook.title %> By <%= relatedBook.author %></span>
-              </a>
-            </div>
-          <% }); %>
-        </div>
-      </section>
+      <div class="row g-4">
+        <% relatedBooks.forEach((relatedBook) => { %>
+          <div class="col-lg-4">
+            <a class="related-card d-block position-relative overflow-hidden" href="/book/<%= encodeURIComponent(relatedBook.title) %>">
+              <img
+                class="related-image"
+                src="<%= relatedBook.image %>"
+                alt="Cover illustration for <%= relatedBook.title %>"
+              >
+              <span class="related-title position-absolute"><%= relatedBook.title %> By <%= relatedBook.author %></span>
+            </a>
+          </div>
+        <% }); %>
+      </div>
+    </section>
 
-      <form class="back-form d-flex justify-content-center" action="/" method="get">
-        <button id="btn-back" class="btn btn-primary back-button" type="submit">Back</button>
-      </form>
-    </main>
+    <form class="back-form d-flex justify-content-center" action="/" method="get">
+      <button id="btn-back" class="btn btn-primary back-button" type="submit">Back</button>
+    </form>
+  </main>
 
-    <%- include('partials/footer') %>
-  </div>
-
-  <%- include('partials/scripts') %>
+  <%- include('partials/footer') %>
 </body>
 </html>

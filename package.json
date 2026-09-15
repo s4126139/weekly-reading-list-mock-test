@@ -1,16 +1,17 @@
 {
-  "name": "book-suggestion-solution",
+  "name": "weekly-reading-list",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "seed": "node db/seed.js",
-    "test": "node --test"
+    "check": "node --check app.js && node --check db/bookModel.js && node --check db/mongoose.js && node --check db/seed.js && node --check public/app.js",
+    "test": "npm run check"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kai Nguyen (s4126139)",
   "license": "ISC",
-  "description": "",
+  "description": "MongoDB-backed weekly reading list built with Express and EJS.",
   "dependencies": {
     "dotenv": "^17.2.2",
     "ejs": "^3.1.10",

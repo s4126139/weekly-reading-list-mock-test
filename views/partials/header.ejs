@@ -1,15 +1,23 @@
-<header class="site-header py-4">
-  <div class="d-flex flex-column flex-lg-row align-items-center justify-content-lg-between gap-3">
-    <a class="brand-link" href="/" aria-label="Kai Nguyen's weekly readings home">
-      <img class="site-logo" src="/images/logo.png" alt="Weekly readings logo" width="64" height="64">
-    </a>
+<%#
+  RMIT University Vietnam
+  Course: COSC3060 | COSC3061 Web Programming Studio
+  Semester: 2026B
+  Assessment: Full-Stack In-Class Lab Test
+  Author: Kai Nguyen
+  ID: s4126139
+  Acknowledgement: Bootstrap and EJS documentation.
+%>
+<%# Shared logo and breadcrumb navigation; the book crumb is conditional. %>
+<header class="site-header py-4 d-flex flex-column flex-lg-row align-items-center gap-3">
+  <a class="brand-link" href="/" aria-label="Kai Nguyen's weekly readings home">
+    <img class="site-logo" src="/images/logo.png" alt="Weekly readings logo" width="64" height="64">
+  </a>
 
-    <nav class="site-nav d-flex flex-wrap justify-content-center align-items-center gap-2" aria-label="Breadcrumb">
-      <a href="/">Home Page</a>
-      <% if (currentBook) { %>
-        <span aria-hidden="true">&gt;</span>
-        <a href="/book/<%= encodeURIComponent(currentBook.title) %>" aria-current="page"><%= currentBook.title %></a>
-      <% } %>
-    </nav>
-  </div>
+  <nav class="site-nav d-flex flex-wrap align-items-center justify-content-center gap-2" aria-label="Breadcrumb">
+    <a href="/">Home Page</a>
+    <% if (currentBook) { %>
+      <span aria-hidden="true">&gt;</span>
+      <a href="/book/<%= encodeURIComponent(currentBook.title) %>" aria-current="page"><%= currentBook.title %></a>
+    <% } %>
+  </nav>
 </header>

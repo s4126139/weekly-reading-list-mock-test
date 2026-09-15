@@ -1,3 +1,14 @@
+/*
+ * RMIT University Vietnam
+ * Course: COSC3060 | COSC3061 Web Programming Studio
+ * Semester: 2026B
+ * Assessment: Full-Stack In-Class Lab Test
+ * Author: Kai Nguyen
+ * ID: s4126139
+ * Acknowledgement: Bootstrap and the supplied interface reference.
+ */
+
+/* Shared colour tokens and page typography. */
 :root {
   --rmit-blue: #00005b;
   --bootstrap-blue: #0d6efd;
@@ -5,21 +16,13 @@
   --muted-text: #6c757d;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
   background: #ffffff;
   color: var(--body-text);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.site-header > div {
-  min-height: 64px;
-}
-
+/* Shared logo and breadcrumb navigation. */
 .brand-link,
 .site-nav a {
   border-radius: 0.25rem;
@@ -40,7 +43,6 @@ body {
 .site-nav a:hover {
   background-color: var(--bootstrap-blue);
   color: #ffffff;
-  text-decoration: none;
 }
 
 .brand-link:focus-visible,
@@ -53,6 +55,7 @@ body {
   outline-offset: 3px;
 }
 
+/* Student profile panel on the reading-list page. */
 .profile-panel {
   min-height: 100%;
   padding: 1rem;
@@ -63,17 +66,12 @@ body {
 
 .profile-photo {
   display: block;
-  flex: 0 0 auto;
   object-fit: cover;
 }
 
 .profile-copy {
   width: 100%;
   margin-top: 1.5rem;
-}
-
-.profile-intro {
-  font-size: 1rem;
 }
 
 .profile-name {
@@ -83,7 +81,6 @@ body {
 }
 
 .profile-details {
-  font-size: 1rem;
   font-style: italic;
   line-height: 1.5;
 }
@@ -93,6 +90,7 @@ body {
   text-decoration: none;
 }
 
+/* Weekly reading-list heading, refresh control, and book cards. */
 .reading-title {
   margin: 0 0 1.25rem;
   font-size: 2rem;
@@ -124,9 +122,10 @@ body {
 }
 
 .reading-card {
+  display: grid;
+  grid-template-columns: 1fr;
   border-color: #d6d6d6;
   border-radius: 0.3rem;
-  box-shadow: none;
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
@@ -137,9 +136,7 @@ body {
 
 .reading-card-body {
   display: flex;
-  flex: 1 1 auto;
   flex-direction: column;
-  justify-content: flex-start;
   padding: 2rem;
 }
 
@@ -161,7 +158,6 @@ body {
 
 .reading-description {
   margin-bottom: 1rem;
-  font-size: 1rem;
   line-height: 1.45;
 }
 
@@ -175,34 +171,35 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 260px;
   object-fit: cover;
 }
 
+/* Selected-book hero section. */
 .book-hero {
   min-height: 540px;
   border-radius: 0.3rem;
   background: #111111;
 }
 
-.book-hero-image,
-.book-hero-shade {
+.book-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.43));
+  pointer-events: none;
+}
+
+.book-hero-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.book-hero-image {
   object-fit: cover;
 }
 
-.book-hero-shade {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.43));
-}
-
 .book-hero-content {
-  z-index: 1;
+  z-index: 2;
   padding: 3rem;
 }
 
@@ -228,6 +225,7 @@ body {
   font-size: 1.25rem;
 }
 
+/* Related-book cards and shared detail-page controls. */
 .related-section {
   margin-top: 3rem;
 }
@@ -247,33 +245,33 @@ body {
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
+.related-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(110deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.08));
+  pointer-events: none;
+}
+
 .related-card:hover {
   color: #ffffff;
-  text-decoration: none;
   transform: translateY(-3px);
   box-shadow: 0 0.75rem 1.5rem rgba(33, 37, 41, 0.2);
 }
 
-.related-image,
-.related-shade {
+.related-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.related-image {
   object-fit: cover;
-}
-
-.related-shade {
-  background: linear-gradient(110deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.08));
 }
 
 .related-title {
   top: 1.5rem;
   left: 1.25rem;
-  z-index: 1;
+  z-index: 2;
   max-width: calc(100% - 2.5rem);
   font-size: 1.55rem;
   line-height: 1.5;
@@ -287,21 +285,19 @@ body {
   font-size: 0.9rem;
 }
 
+/* Bootstrap's large breakpoint: display list-card content in two columns. */
 @media (min-width: 992px) {
-  .site-header > div {
-    justify-content: flex-start !important;
+  .reading-card {
+    min-height: 260px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .profile-panel {
-    align-items: center !important;
-  }
-
-  .reading-card,
-  .reading-card > .row {
+  .reading-cover {
     min-height: 260px;
   }
 }
 
+/* Tablet and mobile layout adjustments. */
 @media (max-width: 991.98px) {
   .site-header {
     padding-top: 1.1rem !important;
@@ -309,7 +305,6 @@ body {
   }
 
   .profile-panel {
-    align-items: center !important;
     margin-inline: -0.75rem;
     padding: 1rem 1.25rem 3.15rem;
   }
@@ -334,7 +329,6 @@ body {
   .reading-cover {
     width: calc(100% - 1.5rem);
     height: auto;
-    min-height: 0;
     margin: 0 0.75rem 0.75rem;
     aspect-ratio: 3 / 2;
   }
@@ -374,6 +368,7 @@ body {
   }
 }
 
+/* Small-phone typography and spacing adjustments. */
 @media (max-width: 575.98px) {
   .profile-photo {
     width: min(250px, 74vw);
@@ -393,6 +388,7 @@ body {
   }
 }
 
+/* Respect visitors who prefer little or no animation. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
